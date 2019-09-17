@@ -1,4 +1,4 @@
-// This package provides functionality for making copies of some specific objects like pointers,
+// package provides functionality for making copies of some specific objects like pointers,
 // maps channels and etc by value.
 package deepcopy
 
