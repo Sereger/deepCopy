@@ -1,3 +1,5 @@
+// This package provides functionality for making copies of some specific objects like pointers,
+// maps channels and etc by value.
 package deepcopy
 
 import (
@@ -6,6 +8,7 @@ import (
 	"time"
 )
 
+// Makes a copy from val to target and uses options opts.
 func Copy(val, target interface{}, opts ...option) (err error) {
 	defer func() {
 		// reflect паникует в случае ошибки, т.ч. делаем recover
@@ -18,6 +21,9 @@ func Copy(val, target interface{}, opts ...option) (err error) {
 	if v.Type() != t.Type() {
 		return errors.New("types not equal")
 	}
+	if t.Kind() != reflect.Ptr {
+		return errors.New("target should be pointer")
+	}
 
 	p := makeProcessor()
 	for _, opt := range opts {
@@ -27,10 +33,12 @@ func Copy(val, target interface{}, opts ...option) (err error) {
 	return
 }
 
+// Option for copy structures with cyclic dependencies
 var CheckRecursive = func(p *processor) {
 	p.cache = make(map[uintptr]reflect.Value)
 }
 
+// Option for copy some structures 'as is'
 func CopyAsIs(types ...interface{}) option {
 	return func(p *processor) {
 		for _, v := range types {

@@ -1,6 +1,6 @@
 # deepCopy
 ### Description
-This package for copying structs with cloning some specific objects like pointers, maps channels and etc by value.
+This package provides functionality for making copies of some specific objects like pointers, maps channels and etc by value.
 
 Example:
 ```go
