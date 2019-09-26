@@ -125,6 +125,20 @@ func testStruct() *tStruct {
 	return ts
 }
 
+func TestSlice(t *testing.T) {
+	v := []int{1, 2, 3, 4}
+	n := make([]int, 0, 4)
+	err := Copy(&v, &n)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i, x := range v {
+		if x != n[i] {
+			t.Fatalf("incorrect value of [%d]: %d != %d", i, x, n[i])
+		}
+	}
+}
+
 func TestError(t *testing.T) {
 	v := testStruct()
 	n := new(struct{ X, Y string })
